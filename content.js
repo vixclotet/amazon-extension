@@ -12,6 +12,7 @@ function createYouTubePlayer() {
     container.style.borderRadius = '8px';
     container.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
     container.style.backgroundColor = 'white';
+    container.style.cursor = 'move'; // Indicate draggable
     
     // Create a header with title
     const header = document.createElement('div');
@@ -65,6 +66,46 @@ function createYouTubePlayer() {
             console.log('Error playing video on click:', e);
         }
     }, { once: true });
+    
+    // Add drag functionality
+    makeDraggable(container, header);
+}
+
+// Function to make an element draggable
+function makeDraggable(element, handle) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    
+    // Use the header as the drag handle
+    handle.onmousedown = dragMouseDown;
+    
+    function dragMouseDown(e) {
+        e.preventDefault();
+        // Get the mouse cursor position at startup
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    }
+    
+    function elementDrag(e) {
+        e.preventDefault();
+        // Calculate the new cursor position
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // Set the element's new position
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+        element.style.right = 'auto';
+        element.style.bottom = 'auto';
+    }
+    
+    function closeDragElement() {
+        // Stop moving when mouse button is released
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
 }
 
 // Initialize the player when the page loads
