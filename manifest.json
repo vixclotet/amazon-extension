@@ -2,8 +2,17 @@
   "manifest_version": 3,
   "name": "Amazon Music Player",
   "version": "1.0",
-  "description": "Plays 'Bezos I' when visiting Amazon or AWS pages",
-  "permissions": ["activeTab"],
+  "description": "Plays 'Everything is Awesome' when visiting Amazon or AWS pages",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; object-src 'self'"
+  },
   "content_scripts": [
     {
       "matches": [

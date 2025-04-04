@@ -1,51 +1,29 @@
-// Load YouTube IFrame API
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-let player;
-
-// Initialize YouTube player when API is ready
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-player', {
-        height: '0',
-        width: '0',
-        videoId: '7_EeCkHs-e0',
-        playerVars: {
-            'autoplay': 1,
-            'controls': 0,
-            'disablekb': 1,
-            'fs': 0,
-            'modestbranding': 1,
-            'playsinline': 1
-        },
-        events: {
-            'onReady': onPlayerReady
-        }
-    });
+// Create a hidden iframe for the YouTube video
+function createYouTubePlayer() {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.width = '0';
+    iframe.height = '0';
+    iframe.src = 'https://www.youtube.com/embed/7_EeCkHs-e0?autoplay=1&controls=0&disablekb=1&fs=0&modestbranding=1&playsinline=1&mute=0';
+    iframe.allow = 'autoplay';
+    
+    // Add iframe to the page
+    document.body.appendChild(iframe);
+    
+    // Store the iframe reference
+    window.youtubePlayer = iframe;
 }
 
-// Create hidden player container
-const playerContainer = document.createElement('div');
-playerContainer.id = 'youtube-player';
-playerContainer.style.display = 'none';
-document.body.appendChild(playerContainer);
+// Initialize the player when the page loads
+createYouTubePlayer();
 
-// Play video when player is ready
-function onPlayerReady(event) {
-    event.target.playVideo();
+// Function to restart the video
+function restartVideo() {
+    if (window.youtubePlayer) {
+        window.youtubePlayer.src = window.youtubePlayer.src;
+    }
 }
 
-// Replay video on page interaction
-document.addEventListener('click', () => {
-    if (player && player.playVideo) {
-        player.playVideo();
-    }
-});
-
-document.addEventListener('keydown', () => {
-    if (player && player.playVideo) {
-        player.playVideo();
-    }
-}); 
+// Add event listeners for page interaction
+document.addEventListener('click', restartVideo);
+document.addEventListener('keydown', restartVideo); 
