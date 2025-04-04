@@ -143,6 +143,4 @@ function restartVideo() {
     }
 }
 
-// Add event listeners for page interaction
-document.addEventListener('click', restartVideo);
-document.addEventListener('keydown', restartVideo); 
+// Removed event listeners for page interaction 
