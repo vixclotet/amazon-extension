@@ -47,25 +47,36 @@ function createYouTubePlayer() {
     // Store the container reference
     window.youtubePlayer = container;
     
-    // Try to unmute the video after a short delay (browser autoplay policies)
-    setTimeout(() => {
+    // Function to unmute the video
+    function unmuteVideo() {
         try {
-            // Send postMessage to unmute the video
             iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            console.log('Attempted to unmute video');
         } catch (e) {
             console.log('Error unmuting video:', e);
         }
-    }, 2000);
+    }
     
-    // Also try to play the video on user interaction
-    document.addEventListener('click', () => {
+    // Function to play the video
+    function playVideo() {
         try {
             iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-            iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            console.log('Attempted to play video');
         } catch (e) {
-            console.log('Error playing video on click:', e);
+            console.log('Error playing video:', e);
         }
-    }, { once: true });
+    }
+    
+    // Start playing and unmuting after 1 second
+    setTimeout(() => {
+        unmuteVideo();
+        playVideo();
+    }, 1000);
+    
+    // Add a periodic check to ensure video stays unmuted
+    setInterval(() => {
+        unmuteVideo();
+    }, 30000); // Check every 30 seconds
     
     // Add drag functionality
     makeDraggable(container, header);
@@ -118,6 +129,16 @@ function restartVideo() {
         if (iframe) {
             // Reload the iframe to restart the video
             iframe.src = iframe.src;
+            
+            // After reloading, try to unmute again
+            setTimeout(() => {
+                try {
+                    iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                } catch (e) {
+                    console.log('Error unmuting video after restart:', e);
+                }
+            }, 2000);
         }
     }
 }
