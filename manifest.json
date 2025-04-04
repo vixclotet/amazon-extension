@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Amazon Music Player",
+  "version": "1.0",
+  "description": "Plays 'Everything is Awesome' when visiting Amazon or AWS pages",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.amazon.*/*",
+        "*://*.aws.amazon.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+} 
