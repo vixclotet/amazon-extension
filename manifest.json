@@ -8,14 +8,24 @@
     {
       "matches": [
         "*://*.amazon.com/*",
-        "*://*.amazon.*/*",
+        "*://*.amazon.co.uk/*",
+        "*://*.amazon.de/*",
+        "*://*.amazon.fr/*",
+        "*://*.amazon.it/*",
+        "*://*.amazon.es/*",
+        "*://*.amazon.jp/*",
+        "*://*.amazon.ca/*",
+        "*://*.amazon.in/*",
+        "*://*.amazon.com.au/*",
+        "*://*.amazon.com.br/*",
+        "*://*.amazon.com.mx/*",
         "*://*.aws.amazon.com/*"
       ],
       "js": ["content.js"]
     }
   ],
   "icons": {
-    "48": "icon48.png",
-    "128": "icon128.png"
+    "48": "musiclogo.png",
+    "128": "musiclogo.png"
   }
 } 
